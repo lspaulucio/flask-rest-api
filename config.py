@@ -29,6 +29,6 @@ class ProdConfig():
 class MockConfig:
 
     MONGODB_SETTINGS = {
-        'db': 'users',
+        'db': 'flaskAPI',
         'host': 'mongomock://localhost'
     }
