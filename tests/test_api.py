@@ -34,11 +34,10 @@ class TestApplication():
     def test_post_user(self, client, valid_user, invalid_user):
         response = client.post('/api/v1/users/', json=valid_user)
         assert response.status_code == 204
-        # assert b"successfully" in response.data
 
         response = client.post('/api/v1/users/', json=invalid_user)
         assert response.status_code == 400
-        # assert b"invalid" in response.data
+        assert b"Invalid CPF! Please enter with a valid one" in response.data
 
     def test_get_user(self, client, valid_user, invalid_user):
         response = client.get('/api/v1/users/%s' % valid_user["cpf"])
@@ -50,6 +49,6 @@ class TestApplication():
         birth_date = response.json[0]["birthDate"]["$date"]
         assert birth_date == "1990-05-14T00:00:00Z"
 
-        response = client.get('/user/%s' % invalid_user["cpf"])
+        response = client.get('/api/v1/users/%s' % invalid_user["cpf"])
         assert response.status_code == 404
-        # assert b"User does not exist in database!" in response.data
+        assert b"User not found in database!" in response.data
