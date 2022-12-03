@@ -4,8 +4,8 @@ from werkzeug.exceptions import BadRequest
 
 from mongoengine import NotUniqueError
 
-from models.userModel import model, UserModel
-from utils.helpers import cpf_validator
+from ..models.userModel import model, UserModel
+from ..utils.helpers import cpf_validator
 
 api = Namespace('Users', description='Users management')
 
@@ -67,3 +67,19 @@ class UserIdController(Resource):
             return jsonify(response)
         else:
             return {'message': 'User not found in database!'}, 404
+
+    # @api.response(200, 'Busca realizada com sucesso')
+    # @api.param('nome', 'Nome da pessoa')  # parametros customizados
+    # @api.param('endereco', 'Endereço da pessoa')
+    # def put(self, id: int):
+    #     # return PessoaDb.alterar(int(id), request.json), 201
+    #     return 200
+
+    # @api.deprecated
+    # def delete(self, id: int):
+    #     # return PessoaDb.remover(int(id)), 200
+    #     return 200
+
+    # @api.hide
+    # def patch(self):
+    #     return 200
