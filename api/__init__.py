@@ -10,8 +10,11 @@ def create_app(config):
     app.register_blueprint(blueprint)
     app.config.from_object(config)
 
-    api = Api(app, title='Flask REST API', version='1.0',
-              description='Simple REST API built in python using flask framework', prefix='/api/v1')
+    api = Api(app, title='Flask REST API',
+              version='1.0',
+              description='Simple REST API built in python using flask framework',
+              prefix='/api/v1',
+              doc='/api-docs')
 
     init_db(app)
 
