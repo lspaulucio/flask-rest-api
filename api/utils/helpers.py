@@ -4,7 +4,7 @@ import re
 def cpf_validator(cpf):
 
     # Has the correct mask?
-    if not re.match(r'\d{3}\.\d{3}\.\d{3}-\d{2}', cpf):
+    if not re.match(r'\d{3}\.\d{3}\.\d{3}-\d{2}$', cpf):
         return False
 
     # Grab only numbers

@@ -46,12 +46,12 @@ class UsersController(Resource):
         payload = user_parser.parse_args()
 
         if not cpf_validator(payload.get('cpf')):
-            raise BadRequest('Invalid CPF! Please enter with a valid one')
+            raise BadRequest('Invalid CPF! Please enter with a valid one!')
 
         try:
             user = UserModel(**payload).save()
         except NotUniqueError:
-            return BadRequest('CPF already exists in database!')
+            raise BadRequest('CPF already exists in database!')
 
         return '', 204
 

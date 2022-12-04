@@ -37,7 +37,7 @@ class TestApplication():
 
         response = client.post('/api/v1/users/', json=invalid_user)
         assert response.status_code == 400
-        assert b"Invalid CPF! Please enter with a valid one" in response.data
+        assert b"Invalid CPF! Please enter with a valid one!" in response.data
 
     def test_get_user(self, client, valid_user, invalid_user):
         response = client.get('/api/v1/users/%s' % valid_user["cpf"])
