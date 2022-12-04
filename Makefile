@@ -1,4 +1,4 @@
-APP = FLASK-API
+APP = flask-api
 
 compose:
 	@docker-compose build
