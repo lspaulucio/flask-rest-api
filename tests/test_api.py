@@ -1,5 +1,6 @@
 import pytest
 from api import create_app
+from api.utils.helpers import cpf_validator
 
 
 class TestApplication():
@@ -52,3 +53,8 @@ class TestApplication():
         response = client.get('/api/v1/users/%s' % invalid_user["cpf"])
         assert response.status_code == 404
         assert b"User not found in database!" in response.data
+
+    def test_cpf_validator(self):
+        assert cpf_validator('908.451.920-51') == True
+        assert cpf_validator('908.451.920-50') == False
+        assert cpf_validator('908.451.920-51a') == False
