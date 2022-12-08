@@ -55,6 +55,6 @@ class TestApplication():
         assert b"User not found in database!" in response.data
 
     def test_cpf_validator(self):
-        assert cpf_validator('908.451.920-51') == True
-        assert cpf_validator('908.451.920-50') == False
-        assert cpf_validator('908.451.920-51a') == False
+        assert cpf_validator('908.451.920-51') is True
+        assert cpf_validator('908.451.920-50') is False
+        assert cpf_validator('908.451.920-51a') is False

@@ -49,7 +49,7 @@ class UsersController(Resource):
             raise BadRequest('Invalid CPF! Please enter with a valid one!')
 
         try:
-            user = UserModel(**payload).save()
+            UserModel(**payload).save()
         except NotUniqueError:
             raise BadRequest('CPF already exists in database!')
 
