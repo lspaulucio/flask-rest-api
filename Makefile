@@ -10,6 +10,7 @@ restart:
 
 test:
 	@pytest -v --disable-warnings
+	@flake8 --statistics --max-line-length=127  
 
 heroku:
 	@heroku container:login
