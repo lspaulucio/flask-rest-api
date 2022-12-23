@@ -22,3 +22,5 @@ six==1.16.0
 tomli==2.0.1
 Werkzeug==2.2.2
 WTForms==3.0.1
+prometheus-client==0.15.0
+prometheus-flask-exporter==0.21.0
