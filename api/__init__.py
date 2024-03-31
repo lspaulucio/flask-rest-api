@@ -2,7 +2,7 @@ from flask_restx import Api
 from flask import Blueprint, Flask, Response
 from .database import init_db
 from .controllers.usersController import api as users_ns
-from prometheus_client.core import CollectorRegistry
+from .controllers.healthController import api as health_ns
 from prometheus_flask_exporter import PrometheusMetrics
 from prometheus_client import generate_latest, CollectorRegistry, CONTENT_TYPE_LATEST
 
@@ -25,6 +25,7 @@ def create_app(config):
     init_db(app)
 
     api.add_namespace(users_ns, path='/users')
+    api.add_namespace(health_ns, path='/health')
 
     metrics.init_app(app)
 
