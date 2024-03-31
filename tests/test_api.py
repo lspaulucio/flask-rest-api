@@ -58,3 +58,28 @@ class TestApplication():
         assert cpf_validator('908.451.920-51') is True
         assert cpf_validator('908.451.920-50') is False
         assert cpf_validator('908.451.920-51a') is False
+
+    def test_patch_valid_user(self, client, valid_user):
+        valid_user["name"] = "Matheus"
+        response = client.patch('/api/v1/users/', json=valid_user)
+        assert response.status_code == 200
+        response = client.get('/api/v1/users/%s' % valid_user["cpf"])
+        assert response.json[0]["name"] == "Matheus"
+
+    def test_patch_invalid_user_mail(self, client, valid_user):
+        valid_user['mail'] = 'teste.com.br'
+        response = client.patch('/api/v1/users/', json=valid_user)
+        assert response.status_code == 304
+
+    def test_patch_invalid_user_cpf(self, client, invalid_user):
+        response = client.patch('/api/v1/users/', json=invalid_user)
+        assert b"Invalid CPF" in response.data
+        assert response.status_code == 400
+
+    def test_delete_user(self, client, valid_user):
+        response = client.delete('/api/v1/users/%s' % valid_user['cpf'])
+        assert response.status_code == 200
+
+        response = client.delete('/api/v1/users/%s' % valid_user['cpf'])
+        assert b"not found" in response.data
+        assert response.status_code == 400

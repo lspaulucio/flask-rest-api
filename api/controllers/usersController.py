@@ -36,7 +36,7 @@ user_parser.add_argument('birthDate',
 
 @api.route('/')
 class UsersController(Resource):
-    @api.response(200, 'Success')
+    @api.response(204, 'Success')
     def get(self):
         return jsonify(UserModel.objects())
 
@@ -55,6 +55,27 @@ class UsersController(Resource):
 
         return '', 204
 
+    @api.expect(model)
+    @api.response(200, 'Success')
+    @api.response(304, 'Not modified')
+    @api.response(400, 'Bad request')
+    def patch(self):
+        payload = user_parser.parse_args()
+        cpf = payload.get('cpf')
+
+        if not cpf_validator(cpf):
+            raise BadRequest('Invalid CPF! Please enter with a valid one!')
+
+        response = UserModel.objects(cpf=cpf)
+        if response:
+            try:
+                response = UserModel.objects(cpf=cpf).update(**payload)
+                return {"message": "User successfully updated!"}, 200
+            except Exception:
+                return {"message": "Error updating user!"}, 304
+        else:
+            return {'message': 'User not found in database!'}, 400
+
 
 @api.route('/<cpf>')
 class UserIdController(Resource):
@@ -67,6 +88,20 @@ class UserIdController(Resource):
             return jsonify(response)
         else:
             return {'message': 'User not found in database!'}, 404
+
+    @api.response(204, 'Success')
+    @api.response(501, 'Error')
+    @api.response(400, 'Bad request')
+    def delete(self, cpf: int):
+        response = UserModel.objects(cpf=cpf)
+        if response:
+            try:
+                response = UserModel.objects(cpf=cpf).delete()
+                return {"message": "User successfully deleted!"}, 200
+            except Exception:
+                return {"message": "Error deleting user!"}, 503
+        else:
+            return {"message": "User not found!"}, 400
 
     # @api.response(200, 'Busca realizada com sucesso')
     # @api.param('nome', 'Nome da pessoa')  # parametros customizados
