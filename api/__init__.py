@@ -9,27 +9,30 @@ from prometheus_client import generate_latest, CollectorRegistry, CONTENT_TYPE_L
 
 def create_app(config):
     app = Flask(__name__)
-    blueprint = Blueprint('api', __name__)
+    blueprint = Blueprint("api", __name__)
     app.register_blueprint(blueprint)
     app.config.from_object(config)
 
     registry = CollectorRegistry()
     metrics = PrometheusMetrics.for_app_factory(registry=registry)
 
-    api = Api(app, title='Flask REST API',
-              version='1.0',
-              description='Simple REST API built in python using flask framework',
-              prefix='/api/v1',
-              doc='/api-docs')
+    api = Api(
+        app,
+        title="Flask REST API",
+        version="1.0",
+        description="Simple REST API built in python using flask framework",
+        prefix="/api/v1",
+        doc="/api-docs",
+    )
 
     init_db(app)
 
-    api.add_namespace(users_ns, path='/users')
-    api.add_namespace(health_ns, path='/health')
+    api.add_namespace(users_ns, path="/users")
+    api.add_namespace(health_ns, path="/health")
 
     metrics.init_app(app)
 
-    @app.route('/metrics')
+    @app.route("/metrics")
     def metrics():
         data = generate_latest(registry)
         return Response(data, mimetype=CONTENT_TYPE_LATEST)

@@ -2,9 +2,8 @@ import re
 
 
 def cpf_validator(cpf):
-
     # Has the correct mask?
-    if not re.match(r'\d{3}\.\d{3}\.\d{3}-\d{2}$', cpf):
+    if not re.match(r"\d{3}\.\d{3}\.\d{3}-\d{2}$", cpf):
         return False
 
     # Grab only numbers
@@ -15,15 +14,13 @@ def cpf_validator(cpf):
         return False
 
     # Validate first digit after -
-    sum_of_products = sum(a*b for a, b in zip(numbers[0:9],
-                                              range(10, 1, -1)))
+    sum_of_products = sum(a * b for a, b in zip(numbers[0:9], range(10, 1, -1)))
     expected_digit = (sum_of_products * 10 % 11) % 10
     if numbers[9] != expected_digit:
         return False
 
     # Validate second digit after -
-    sum_of_products = sum(a*b for a, b in zip(numbers[0:10],
-                                              range(11, 1, -1)))
+    sum_of_products = sum(a * b for a, b in zip(numbers[0:10], range(11, 1, -1)))
     expected_digit = (sum_of_products * 10 % 11) % 10
     if numbers[10] != expected_digit:
         return False
