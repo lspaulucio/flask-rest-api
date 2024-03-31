@@ -1,8 +1,8 @@
 APP = flask-api
 
 compose:
-	@docker-compose build
-	@docker-compose up
+	@docker compose build
+	@docker compose up
 
 restart:
 	@docker-compose down
