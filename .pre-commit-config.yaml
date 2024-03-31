@@ -19,3 +19,8 @@ repos:
         #   --statistics,
         #   --max-line-length=88
         # ]
+  - repo: https://github.com/PyCQA/bandit
+    rev: '' # Update me!
+    hooks:
+    - id: bandit
+      args: ["-r . -x '*/tests/*'"]
