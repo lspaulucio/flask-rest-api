@@ -49,4 +49,4 @@ jobs:
 
     - name: Check vulnerabilities with bandit
       run: |
-        bandit bandit -r . -x '*/tests/*'
+        bandit -r -x '*/tests/*' .

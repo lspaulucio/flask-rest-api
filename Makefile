@@ -11,7 +11,7 @@ restart:
 test:
 	@black .
 	@flake8 --statistics
-	@bandit -r . -x '*/tests/*'
+	@bandit -r -x '*/tests/*' .
 	@pytest -v --disable-warnings
 
 
